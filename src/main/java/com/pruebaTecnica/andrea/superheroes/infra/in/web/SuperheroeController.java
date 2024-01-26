@@ -27,9 +27,13 @@ public class SuperheroeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Superheroe> retrieveById(@PathVariable UUID id) {
-        Optional<Superheroe> superhero = superheroService.retrieveById(id);
-        return superhero.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Superheroe> retrieveById(@PathVariable Long id) {
+        return ResponseEntity.ok(superheroService.retrieveById(id));
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Superheroe>> retrieveByName(@PathVariable String name) {
+        return ResponseEntity.ok(superheroService.retrieveByName(name));
     }
 
     @PostMapping
@@ -39,13 +43,13 @@ public class SuperheroeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody Superheroe superhero) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Superheroe superhero) {
         superheroService.update(id,superhero);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSuperhero(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteSuperhero(@PathVariable Long id) {
         superheroService.delete(id);
         return ResponseEntity.ok().build();
     }
